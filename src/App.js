@@ -3,7 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 
 import Counter from './components/counter';
-import Person from './components/Person';
+import Person from './components/Person/Person';
+import UserOutput from './components/Output';
+import UserInput from './components/Input';
 
 //these are called statefull component; as state has been used via useState  or state.
 
@@ -105,5 +107,53 @@ class App extends Component {
     );
   }
 }
+
+
+//first assignment 
+
+// class App extends Component {
+
+//   //state is a reserved keyword and can only be used in class based component, not in functional based.
+//   state = {
+//     persons : [
+//       { name:'Jhon', age: 30},
+//       { name:'celine', age: 20},
+//       { name:'Bibek', age: 24}
+//     ]
+//   }
+
+//   changeNameHandler = () => {
+//     this.setState({
+//       persons: [
+//         { name:'Joshep', age: 30},
+//         { name:'celine', age: 20},
+//         { name:'Bibek', age: 24}
+//       ]
+//     });
+//   }
+
+//   updateNameHandler = (event) => {
+//     this.setState({
+//       persons: [
+//           { name:'Joshep', age: 30},
+//           { name:'celine', age: 20},
+//           { name: event.target.value, age: 24}
+//         ]
+//     })
+//   }
+
+//   render() {
+//     return (
+//       <div className="App">
+//         <UserOutput name={this.state.persons[0].name} age={this.state.persons[0].age}/>
+//         <UserOutput name={this.state.persons[1].name} age={this.state.persons[1].age}/>
+//         <UserOutput name={this.state.persons[2].name} age={this.state.persons[2].age}/>
+//         <UserInput change={this.updateNameHandler}/>
+
+//         <button onClick={this.changeNameHandler}>Change Name</button>
+//       </div>
+//     );
+//   }
+// }
 
 export default App;
