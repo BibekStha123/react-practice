@@ -6,6 +6,7 @@ import Counter from './components/counter';
 import Person from './components/Person/Person';
 import UserOutput from './components/Output';
 import UserInput from './components/Input';
+import person from './components/Person/Person';
 
 //these are called statefull component; as state has been used via useState  or state.
 
@@ -59,16 +60,18 @@ import UserInput from './components/Input';
 class App extends Component {
 
   //state is a reserved keyword and can only be used in class based component, not in functional based.
+  //the way of initializing the variable.
   state = {
     persons : [
       { name:'Jhon', age: 30},
       { name:'celine', age: 20},
       { name:'Bibek', age: 24}
     ],
-     otherState: 'some other value'
+     otherState: 'some other value',
+     showPerson: false
   }
 
-  switchNameHandler = (newName) => {
+  switchNameHandler = (newName, newAge) => {
     // this.state.persons.name = 'jhonny'; CAN NOT DO THIS
 
     //  In class based component, changing on the state will only change the specified object state, leaving other state untouched
@@ -76,12 +79,13 @@ class App extends Component {
     this.setState({
       persons: [
         { name: newName, age: 30},
-        { name:'celine', age: 20},
-        { name:'Bibek', age: 27}
+        { name: 'ema', age: newAge},
+        { name: 'Bibek', age: 27}
       ]
     })
   }
 
+  //change name on typing on inut field // two way binding
   nameChangeHandler = (event) => {
     this.setState({
       persons: [
@@ -92,17 +96,59 @@ class App extends Component {
     });
   }
 
+  //show or hide person
+  tooglePersonHandler = () => {
+    const show = this.state.showPerson;
+    this.setState({
+      showPerson : !show
+    });
+  }
+
   render() {
+
+    //inline css is written inside the render function
+    const style = {
+      backgroundColor: 'green'
+    }
+
+    // can assign null, if don't want to display anything
+    let persons = (
+      <p>Click the above button to display persons.</p>
+    );
+
+    //display or hide persons
+    if(this.state.showPerson) {
+      persons =(
+        <div>
+          <Person name={ this.state.persons[0].name } age={ this.state.persons[0].age }/>
+          <Person name={ this.state.persons[1].name } age={ this.state.persons[1].age } click={this.switchNameHandler.bind(this, 'josh')}
+          change={this.nameChangeHandler}  />
+          <Person name={ this.state.persons[2].name } age={ this.state.persons[2].age }> My hobbie is to sing. </Person>
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h2>Hello</h2>
         <Counter/>
         {/* if () is used in function, function will be called on render */}
-        <button className="btn btn-primary" onClick={this.switchNameHandler.bind(this, 'Jhonny')}>Switch Name</button>
-        <Person name={ this.state.persons[0].name } age={ this.state.persons[0].age }/>
-        <Person name={ this.state.persons[1].name } age={ this.state.persons[1].age } click={this.switchNameHandler.bind(this, 'josh')}
-         change={this.nameChangeHandler}  />
-        <Person name={ this.state.persons[2].name } age={ this.state.persons[2].age }> My hobbie is to sing. </Person>
+        <button className="btn btn-primary" onClick={this.switchNameHandler.bind(this, 'Jhonny', 19)}>Switch Name</button>
+        <br/><button style={style} onClick={this.tooglePersonHandler}>Toogle Person</button>
+        {/* conditional statement; bad way*/}
+
+        {/* { this.state.showPerson ? 
+          <div>
+            <Person name={ this.state.persons[0].name } age={ this.state.persons[0].age }/>
+            <Person name={ this.state.persons[1].name } age={ this.state.persons[1].age } click={this.switchNameHandler.bind(this, 'josh')}
+            change={this.nameChangeHandler}  />
+            <Person name={ this.state.persons[2].name } age={ this.state.persons[2].age }> My hobbie is to sing. </Person>
+          </div>
+          : <p>Click the above button to display persons.</p>
+        } */}
+        {/* conditional statement; recommended way*/}
+        {persons}
+
       </div>
     );
   }
@@ -148,7 +194,7 @@ class App extends Component {
 //         <UserOutput name={this.state.persons[0].name} age={this.state.persons[0].age}/>
 //         <UserOutput name={this.state.persons[1].name} age={this.state.persons[1].age}/>
 //         <UserOutput name={this.state.persons[2].name} age={this.state.persons[2].age}/>
-//         <UserInput change={this.updateNameHandler}/>
+//         <UserInput change={this.updateNameHandler} currentName={this.state.persons[2].name}/>
 
 //         <button onClick={this.changeNameHandler}>Change Name</button>
 //       </div>

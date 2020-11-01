@@ -4,7 +4,7 @@ import { propTypes } from 'react-bootstrap/esm/Image';
 var userInput = (props) => {
     return (
         <div>
-            <input type="text" onChange={props.change}/>
+            <input type="text" onChange={props.change} value={props.currentName}/>
         </div>
     )
 }
