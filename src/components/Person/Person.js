@@ -9,7 +9,8 @@ var person = (props) => {
         <div className="Person">
             <p onClick={props.click}>I am {props.name}. I am {props.age}</p>
             <p>{props.children}</p>
-            <input type="text" onChange={props.change}/>
+            <input type="text" onChange={props.change}/>&nbsp;
+            <button className="btn btn-danger" onClick={props.deletePerson}>Delete</button>
         </div>
     )
 }
